@@ -90,8 +90,8 @@ for line in f:
 
 	## Insert your code here ##
 	
-		
-
+	#######################################################################	
+	pitch = atan2(acc_y, sqrt(acc_x**2 + acc_z**2))
 	myValue = pitch # relevant for the first exercise, then change this.
 
 	# in order to show a plot use this function to append your value to a list:
