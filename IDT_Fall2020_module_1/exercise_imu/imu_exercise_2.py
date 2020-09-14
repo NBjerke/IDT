@@ -8,8 +8,8 @@
 
 ## Uncomment the file to read ##
 #fileName = 'imu_razor_data_static.txt'
-fileName = 'imu_razor_data_pitch_55deg.txt'
-#fileName = 'imu_razor_data_roll_65deg.txt'
+#fileName = 'imu_razor_data_pitch_55deg.txt'
+fileName = 'imu_razor_data_roll_65deg.txt'
 #fileName = 'imu_razor_data_yaw_90deg.txt'
 
 ## IMU type
@@ -91,8 +91,8 @@ for line in f:
     ## Insert your code here ##
     
     ####################################################################### 
-    pitch = atan2(acc_y, sqrt(acc_x**2 + acc_z**2))
-    pitch_g = atan2(gyro_y, sqrt(gyro_x**2 + gyro_z**2))
+    pitch = atan2(-acc_x,acc_z)
+    pitch_g = atan2(-gyro_x, gyro_z)
     myValue_a = pitch # relevant for the first exercise, then change this.
     myValue_g = pitch_g
     # in order to show a plot use this function to append your value to a list:
