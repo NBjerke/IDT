@@ -22,7 +22,6 @@ plotData = []
 
 ## Initialize your variables here ##
 myValue_a = 0.0
-myValue_g = 0.0
 
 
 
@@ -92,9 +91,7 @@ for line in f:
     
     ####################################################################### 
     pitch = atan2(-acc_x,acc_z)
-    pitch_g = atan2(-gyro_x, gyro_z)
     myValue_a = pitch # relevant for the first exercise, then change this.
-    myValue_g = pitch_g
     # in order to show a plot use this function to append your value to a list:
     plotData.append (myValue_a*180.0/pi)
 
