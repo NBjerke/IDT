@@ -120,8 +120,8 @@ for line in f:
         ## Insert your code here ##
 
         # calculate pitch (x-axis) and roll (y-axis) angles
-        pitch =  
-        roll = 
+        pitch = atan2(acc_y, sqrt(acc_x**2+acc_z**2)) 
+        roll = atan2(-acc_z, acc_x)
 
         # integrate gyro velocities to releative angles
         gyro_x_rel +=    
