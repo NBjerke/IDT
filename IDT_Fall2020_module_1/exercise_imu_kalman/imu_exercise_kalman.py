@@ -30,21 +30,14 @@ bias_gyro_y = 2.7091355738502465e-08 # [rad/measurement]
 bias_gyro_z = -2.7e-08 # [rad/measurement]
 
 # variances
-<<<<<<< HEAD
 gyroVar = 0 
-=======
 gyroVar = 0
->>>>>>> 3c7ff7ca63731433f9bf2e687c5b4ee3de64cbcd
 pitchVar = 0
 
 # Kalman filter start guess
 estAngle = -pi/4.0
-<<<<<<< HEAD
 estVar = 3.14
-=======
-estVar =	3.14 
 
->>>>>>> 3c7ff7ca63731433f9bf2e687c5b4ee3de64cbcd
 # Kalman filter housekeeping variables
 gyroVarAcc = 0
 
