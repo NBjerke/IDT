@@ -124,9 +124,9 @@ for line in f:
         roll = atan2(-acc_z, acc_x)
 
         # integrate gyro velocities to releative angles
-        gyro_x_rel +=    
-        gyro_y_rel +=
-        gyro_z_rel +=
+        gyro_x_rel += gyro_x*(ts_now-ts_prev)   
+        gyro_y_rel += gyro_y*(ts_now-ts_prev)
+        gyro_z_rel += gyro_z*(ts_now-ts_prev)
 
         # Kalman prediction step (we have new data in each iteration)
 
