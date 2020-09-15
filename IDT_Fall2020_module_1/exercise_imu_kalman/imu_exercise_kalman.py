@@ -23,7 +23,9 @@ show3DLiveView = True
 show3DLiveViewInterval = 3
 
 ##### Insert initialize code below ###################
-
+lidarVar = 0.001
+lidarAngle = 0.001
+k = 0
 # approx. bias values determined by averaging over static measurements
 bias_gyro_x = 1.1091355738502465e-05 # [rad/measurement]
 bias_gyro_y = 2.7091355738502465e-08 # [rad/measurement]
@@ -40,8 +42,8 @@ estVar = 3.14
 
 # Kalman filter housekeeping variables
 gyroVarAcc = 0
-
-######################################################
+gyroVelocity = 0
+gyroVarAccumulated = 0
 
 ## Variables for plotting ##
 plotDataGyro = []
@@ -132,9 +134,9 @@ for line in f:
 	gyro_z_rel += gyro_z*(ts_now-ts_prev)
 
 	# Kalman prediction step (we have new data in each iteration)
-	predAngle = estAngle + gyreVelocity*(ts_now-ts_recv)
-	gyreVarAccumulated = gyreVarAccumulated + gyroVar
-	predVar = estVar + gyreVarAccumulated*(ts_now - ts_recv)
+	predAngle = estAngle + gyroVelocity*(ts_now-ts_recv)
+	gyroVarAccumulated = gyroVarAccumulated + gyroVar
+	predVar = estVar + gyroVarAccumulated*(ts_now - ts_recv)
 	estAngle = predAngle
 	estVar = predVar
 
