@@ -24,18 +24,17 @@ show3DLiveViewInterval = 3
 ##### Insert initialize code below ###################
 
 # approx. bias values determined by averaging over static measurements
-bias_gyro_x = 0.0 # [rad/measurement]
-bias_gyro_y = 0.0 # [rad/measurement]
-bias_gyro_z = 0.0 # [rad/measurement]
+bias_gyro_x = 1.1091355738502465e-05 # [rad/measurement]
+bias_gyro_y = 2.7091355738502465e-08 # [rad/measurement]
+bias_gyro_z = -2.7e-08 # [rad/measurement]
 
 # variances
-gyroVar = 
-pitchVar = 
+gyroVar = 0 
+pitchVar = 0
 
 # Kalman filter start guess
 estAngle = -pi/4.0
-estVar = 
-
+estVar = 3.14
 # Kalman filter housekeeping variables
 gyroVarAcc = 
 
