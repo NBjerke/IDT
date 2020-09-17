@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from pylab import ion
 from imu_box3d import imu_visualize
 
-# name of the file to read ## 
+# name of the file to read ##
 fileName = 'imu_razor_data_pitch_55deg.txt'
 
 ## IMU type
@@ -23,27 +23,24 @@ show3DLiveView = True
 show3DLiveViewInterval = 3
 
 ##### Insert initialize code below ###################
-lidarVar = 0.001
-lidarAngle = 0.001
-k = 0
+
 # approx. bias values determined by averaging over static measurements
-bias_gyro_x = 1.1091355738502465e-05 # [rad/measurement]
-bias_gyro_y = 2.7091355738502465e-08 # [rad/measurement]
-bias_gyro_z = -2.7e-08 # [rad/measurement]
+bias_gyro_x = 0.0 # [rad/measurement]
+bias_gyro_y = 0.0 # [rad/measurement]
+bias_gyro_z = 0.0 # [rad/measurement]
 
 # variances
-gyroVar = 0 
-gyroVar = 0
-pitchVar = 0
+gyroVar = 1 
+pitchVar = 1
 
 # Kalman filter start guess
 estAngle = -pi/4.0
-estVar = 3.14
+estVar = 0
 
 # Kalman filter housekeeping variables
-gyroVarAcc = 0
-gyroVelocity = 0
-gyroVarAccumulated = 0
+gyroVarAcc = 0 
+
+######################################################
 
 ## Variables for plotting ##
 plotDataGyro = []
@@ -71,7 +68,7 @@ if show3DLiveView == True:
 for line in f:
 	count += 1
 
- 	# split the line into CSV formatted data
+	# split the line into CSV formatted data
 	line = line.replace ('*',',') # make the checkum another csv value
 	csv = line.split(',')
 
@@ -79,7 +76,6 @@ for line in f:
 	ts_recv = float(csv[0])
 	if count == 1: 
 		ts_now = ts_recv # only the first time
-	
 	ts_prev = ts_now
 	ts_now = ts_recv
 
@@ -103,57 +99,52 @@ for line in f:
 		gyro_x = float(csv[13])
 		gyro_z = -float(csv[14])
 
-	# subtract defined static bias for each gyro            
+	# subtract defined static bias for each gyro		
 	gyro_x -= bias_gyro_x
 	gyro_y -= bias_gyro_y
 	gyro_z -= bias_gyro_z
 
-##### Insert loop code below #########################
+	##### Insert loop code below #########################
 
-# Variables available
-# ----------------------------------------------------
-# count         Current number of updates               
-# ts_prev       Time stamp at the previous update
-# ts_now        Time stamp at this update
-# acc_x         Acceleration measured along the x axis
-# acc_y         Acceleration measured along the y axis
-# acc_z         Acceleration measured along the z axis
-# gyro_x        Angular velocity measured about the x axis
-# gyro_y        Angular velocity measured about the y axis
-# gyro_z        Angular velocity measured about the z axis
+	# Variables available
+	# ----------------------------------------------------
+	# count		Current number of updates		
+	# ts_prev	Time stamp at the previous update
+	# ts_now	Time stamp at this update
+	# acc_x		Acceleration measured along the x axis
+	# acc_y		Acceleration measured along the y axis
+	# acc_z		Acceleration measured along the z axis
+	# gyro_x	Angular velocity measured about the x axis
+	# gyro_y	Angular velocity measured about the y axis
+	# gyro_z	Angular velocity measured about the z axis
 
-## Insert your code here ##
+	## Insert your code here ##
 
 	# calculate pitch (x-axis) and roll (y-axis) angles
-	pitch = atan2(acc_y, sqrt(acc_x**2+acc_z**2)) 
-	roll = atan2(-acc_z, acc_x)
+	pitch = atan2(acc_y, sqrt(acc_x**2 + acc_z**2)  
+	roll = atan2(-acc_x, acc_z) 
 
 	# integrate gyro velocities to releative angles
-	gyro_x_rel += gyro_x*(ts_now-ts_prev)   
+	gyro_x_rel += gyro_x*(ts_now-ts_prev)
 	gyro_y_rel += gyro_y*(ts_now-ts_prev)
 	gyro_z_rel += gyro_z*(ts_now-ts_prev)
 
 	# Kalman prediction step (we have new data in each iteration)
-	predAngle = estAngle + gyroVelocity*(ts_now-ts_recv)
-	gyroVarAccumulated = gyroVarAccumulated + gyroVar
-	predVar = estVar + gyroVarAccumulated*(ts_now - ts_recv)
-	estAngle = predAngle
-	estVar = predVar
-
+        predAngle = estAngle + gyro_x_rel
+        gyroVarAcc += gyroVar
+        predVar = estVar + gyroVarAcc
+        estAngle = predAngle
+        estVar = predVar
+        
 
 
 	# Kalman correction step (we have new data in each iteration)
-	K = predVar/(predVar+lidarVar)
-	corrAngle = predAngle + k * (lidarAngle - predAngle)
-	corrVar = predVar * (1-K)
-	estAngle = corrAngle
-	estVar = corrVar
-	gyroVarAccumulated = 0
+
 
 
 
 	# define which value to plot as the Kalman filter estimate
-	kalman_estimate = estAngle
+	kalman_estimate = pitchVar 
 
 	# define which value to plot as the absolute value (pitch/roll)
 	pitch_roll_plot = pitch
@@ -161,26 +152,26 @@ for line in f:
 	# define which value to plot as the relative gyro value
 	gyro_rel_plot = gyro_x_rel
 
-######################################################
+	######################################################
 
-# if 3D liveview is enabled
-if show3DLiveView == True and count % show3DLiveViewInterval == 0:
+	# if 3D liveview is enabled
+	if show3DLiveView == True and count % show3DLiveViewInterval == 0:
 
-	# determine what variables to liveview
-	roll_view = 0.0
-	yaw_view = 0.0
-	pitch_view = kalman_estimate
+		# determine what variables to liveview
+		roll_view = 0.0
+		yaw_view = 0.0
+		pitch_view = kalman_estimate
 
-	imuview.set_axis (-pitch_view, -yaw_view, roll_view)
-	imuview.update()
+		imuview.set_axis (-pitch_view, -yaw_view, roll_view)
+		imuview.update()
 
-# if plotting is enabled
-if showPlot == True:
-	plotDataGyro.append(gyro_rel_plot*180.0/pi)
-	plotDataAcc.append(pitch_roll_plot*180.0/pi)
-	plotDataKalman.append(kalman_estimate*180.0/pi)
+	# if plotting is enabled
+	if showPlot == True:
+		plotDataGyro.append(gyro_rel_plot*180.0/pi)
+		plotDataAcc.append(pitch_roll_plot*180.0/pi)
+		plotDataKalman.append(kalman_estimate*180.0/pi)
 
-# closing the file      
+# closing the file	
 f.close()
 
 # show the plot

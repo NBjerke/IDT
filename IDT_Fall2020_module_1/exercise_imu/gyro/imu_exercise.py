@@ -62,21 +62,16 @@ for line in f:
         acc_z = int(csv[4]) / 1000.0 * 4 * 9.82;
         gyro_x = int(csv[5]) * 1/14.375 * pi/180.0;
         gyro_y = int(csv[6]) * 1/14.375 * pi/180.0;
-#        if count == 1:
- #            gyro_z_n = int(csv[7]) * 1/14.375 * pi/180.0;
-  #           gyro_z_old = 0
-   #     gyro_z_n = int(csv[7]) * 1/14.375 * pi/180.0;
-        gyro_z =( int(csv[7]) * 1/14.375 * pi/180.0)*(ts_now - ts_prev);
-    #    gyro_z_old = gyro_z_n
+        gyro_z =( int(csv[7]) * 1/14.375 * pi/180.0 )*(ts_now - ts_prev);
         
-    elif imuType == 'vectornav_vn100':
+ #   else if imuType == 'vectornav_vn100':
         # import data from a VectorNav VN-100 configured to output $VNQMR
-        acc_x = float(csv[9])
-        acc_y = float(csv[10])
-        acc_z = float(csv[11])
-        gyro_x = float(csv[12])
-        gyro_y = float(csv[13])
-        gyro_z = float(csv[14])
+  #      acc_x = float(csv[9])
+  #      acc_y = float(csv[10])
+  #      acc_z = float(csv[11])
+  #      gyro_x = float(csv[12])
+  #      gyro_y = float(csv[13])
+  #      gyro_z = float(csv[14])
             
     ##### Insert loop code below #########################
 
