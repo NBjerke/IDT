@@ -8,8 +8,8 @@
 
 ## Uncomment the file to read ##
 #fileName = 'imu_razor_data_static.txt'
-fileName = 'imu_razor_data_pitch_55deg.txt'
-#fileName = 'imu_razor_data_roll_65deg.txt'
+#fileName = 'imu_razor_data_pitch_55deg.txt'
+fileName = 'imu_razor_data_roll_65deg.txt'
 #fileName = 'imu_razor_data_yaw_90deg.txt'
 
 ## IMU type
@@ -45,7 +45,7 @@ count = 0
 T = 1200.0      # Sample Period
 fs = 100.0      # sample rate, Hz
 cutoff = 1      
-nyq = 0.6 * fs
+nyq = 0.2* fs
 order = 4
 
 def butter_lowpass_filter(data, cutoff, fs, order):
