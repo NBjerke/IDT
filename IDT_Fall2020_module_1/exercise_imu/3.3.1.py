@@ -94,7 +94,7 @@ for line in f:
 
 #    pitch = atan2(acc_y, sqrt(acc_x**2 + acc_z**2))
 #    roll = atan2(-acc_x,acc_z) 
-    myValue += gyro_z
+    myValue = (myValue + gyro_z) * (ts_now - ts_prev)
  
  # in order to show a plot use this function to append your value to a list:
     plotData.append (myValue*180.0/pi)
