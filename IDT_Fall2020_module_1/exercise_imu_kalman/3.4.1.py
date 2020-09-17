@@ -29,11 +29,11 @@ bias_gyro_x = 0.0 # [rad/measurement]
 bias_gyro_y = 0.0 # [rad/measurement]
 bias_gyro_z = 0.0 # [rad/measurement]
 
-gyroVar = 1
-pitchVar = 1
+gyroVar = 1.4
+pitchVar = 1.2
 
-accVar = 0
-accAngle = 0
+accVar = 1.2
+accAngle =1.0
 
 # Kalman filter start guess
 estAngle = -pi/4.0
